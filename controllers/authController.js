@@ -55,7 +55,6 @@ exports.verifyAuthentication = async (req, res, next) => {
         decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
         next();
     } catch(e) {
-        console.log(e);
         res.status(401).send({
             status: 'fail',
             message: 'Authentication Error - Bad Token',

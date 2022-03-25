@@ -13,8 +13,6 @@ const dbTables = {};
 dbTables.employees = employeeModel.employees;
 dbTables.departments = departmentModel.departments;
 
-console.log(employeeModel)
-
 ////////////////////////////////////
 // Common Functions
 ////////////////////////////////////
@@ -105,7 +103,7 @@ const insertData = async (req) => {
                 dbTables[req.params.table].encryptColumns &&
                 dbTables[req.params.table].encryptColumns.includes(key)
             ) {
-                values += ` act_util_pkg.encrypt_data(pText=> :${key},pKey=> :${key}ek), `;
+                values += ` ds_util_pkg.encrypt_data(pText=> :${key},pKey=> :${key}ek), `;
                 binds[`${key}ek`] = process.env.ENC_KEY;
             } else if (
                 dbTables[req.params.table].dateColumns &&
@@ -218,7 +216,7 @@ const updateData = async (req) => {
                     dbTables[req.params.table].encryptColumns &&
                     dbTables[req.params.table].encryptColumns.includes(key)
                 ) {
-                    query += ` act_util_pkg.encrypt_data(pText=> :${key},pKey=> :${key}ek), `;
+                    query += ` ds_util_pkg.encrypt_data(pText=> :${key},pKey=> :${key}ek), `;
                     binds[`${key}ek`] = process.env.ENC_KEY;
                 } else if (
                     dbTables[req.params.table].dateColumns &&
@@ -312,7 +310,7 @@ const updateDataAll = async (req) => {
                         dbTables[req.params.table].columns[col]
                     )
                 ) {
-                    query += ` act_util_pkg.encrypt_data(pText=> :${
+                    query += ` ds_util_pkg.encrypt_data(pText=> :${
                         dbTables[req.params.table].columns[col]
                     },pKey=> :${dbTables[req.params.table].columns[col]}ek), `;
                     binds[`${dbTables[req.params.table].columns[col]}ek`] =
