@@ -5,45 +5,15 @@ const excludedFields = ['offset', 'sort', 'limit', 'fields'];
 var objectConstructor = {}.constructor;
 const queryFeatures = require('../helpers/queryFeatures');
 
+const employeeModel = require("../models/employeeModel")
+const departmentModel = require("../models/departmentModel")
+
 const dbTables = {};
 
-dbTables.employees = {
-    columns: [
-        'EMPLOYEE_ID',
-        'FIRST_NAME',
-        'LAST_NAME',
-        'EMAIL',
-        'PHONE_NUMBER',
-        'HIRE_DATE',
-        'JOB_ID',
-        'SALARY',
-        'COMMISSION_PCT',
-        'MANAGER_ID',
-        'DEPARTMENT_ID',
-    ],
-    pk: 'EMPLOYEE_ID',
-    dateColumns: ['HIRE_DATE'],
-    multiColumnPK: false,
-    encryptColumns: [],
-    clobcolumn: [],
-    sortableColumns: ['LAST_NAME','DEPARTMENT_ID'],
-};
+dbTables.employees = employeeModel.employees;
+dbTables.departments = departmentModel.departments;
 
-dbTables.departments = {
-    columns: [
-        'DEPARTMENT_ID',
-        'DEPARTMENT_NAME',
-        'MANAGER_ID',
-        'LOCALTION_ID',
-    ],
-    pk: 'DEPARTMENT_ID',
-    dateColumns: [],
-    multiColumnPK: false,
-    encryptColumns: [],
-    clobcolumn: [],
-    sortableColumns: ['DEPARTMENT_ID','DEPARTMENT_NAME'],
-};
-
+console.log(employeeModel)
 
 ////////////////////////////////////
 // Common Functions
