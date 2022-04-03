@@ -2,7 +2,7 @@ const cryptonite = require('../helpers/cryptonite');
 const readline = require('readline');
 const dotenv = require('dotenv');
 dotenv.config({
-    path: './config/config.env',
+    path: '../config/config.env',
 });
 
 const rl = readline.createInterface({

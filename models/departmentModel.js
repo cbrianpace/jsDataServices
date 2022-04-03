@@ -1,4 +1,4 @@
-module.exporters = {
+module.exports = {
     departments:
     {
         columns: [

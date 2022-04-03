@@ -18,14 +18,22 @@ process.env.DATABASE_PASSWORD_DECRYPTED = cryptonite.decryptdb(
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
 process.env['HOSTNAME'] = os.hostname();
 
-const dbConfig = require('./config/databaseora.js');
+const dbConfig = require('./config/database.js');
 const defaultThreadPoolSize = 4;
 process.env.UV_THREADPOOL_SIZE =
     dbConfig.dbPool.poolMax + defaultThreadPoolSize;
 
-const database = require('./services/databaseora.js');
-const ldap = require('./services/ldap.js');
+let database = null;
 
+if ( process.env.DATABASE_PLATFORM == "oracle") {
+    database = require('./services/oracle.js');
+}
+
+if (process.env.DATABASE_PLATFORM == "postgres") {
+    database = require('./services/postgres.js');
+}
+
+const ldap = require('./services/ldap.js');
 
 console.log('PID: ', process.pid);
 
@@ -35,6 +43,7 @@ async function startup() {
     console.log('Starting application');
 
     try {
+        console.log('Using Database Platform: ' + process.env.DATABASE_PLATFORM);
         console.log('Initializing database module');
 
         await database.initialize();

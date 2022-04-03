@@ -1,0 +1,89 @@
+# Built to test API via Rest API Client in vscode
+@server = 127.0.0.1:3000
+@username = admin
+@password = admin
+
+###
+# @name login
+Post https://{{server}}/api/v1/auth/login
+Authorization:  Basic {{username}}:{{password}}
+
+@token = {{login.response.body.$.token}}
+
+###
+# @name jsDataServices-db-GET
+Get https://{{server}}/api/v1/db/employees?sort=LAST_NAME[asc]&JOB_ID[lk]=IT&offset=0&limit=10
+Authorization:  Bearer {{token}}
+
+###
+# @name jsDataServices-db-GET2
+Get https://{{server}}/api/v1/db/employees?sort=LAST_NAME[asc]&EMPLOYEE_ID[eq]=1&offset=0&limit=10
+Authorization:  Bearer {{token}}
+
+###
+# @name jsDataServicesGET3
+Get https://{{server}}/api/v1/db/employees?sort=LAST_NAME[asc]&LAST_NAME[eq]=Pace
+Authorization:  Bearer {{token}}
+
+###
+# @name jsDataServices-db-POST
+Post https://{{server}}/api/v1/db/employees
+Authorization:  Bearer {{token}}
+content-type: application/json
+
+{
+    "FIRST_NAME": "Bugs",
+    "LAST_NAME": "Bunny",
+    "EMAIL": "bugs.bunny@acme.local",
+    "PHONE_NUMBER": "555.555.1212",
+    "HIRE_DATE": "2005-06-25T04:00:00.000Z",
+    "JOB_ID": "IT_PROG",
+    "SALARY": 4800,
+    "MANAGER_ID": 103,
+    "DEPARTMENT_ID": 60
+}
+
+###
+# @name jsDataServices-db-POST
+Delete https://{{server}}/api/v1/db/employees/221
+Authorization:  Bearer {{token}}
+
+###
+# @name jsDataServices-db-PATCH
+Patch https://{{server}}/api/v1/db/employees/222
+Authorization:  Bearer {{token}}
+content-type: application/json
+
+{
+    "email": "bugs@acme.local"
+}
+
+###
+# @name jsDataServices-db-PUT
+Put https://{{server}}/api/v1/db/employees/222
+Authorization:  Bearer {{token}}
+content-type: application/json
+
+{
+    "FIRST_NAME": "Foghorn",
+    "LAST_NAME": "Leghorn",
+    "EMAIL": "foghorn@acme.local",
+    "PHONE_NUMBER": "555.555.1212",
+    "HIRE_DATE": "2005-06-25T04:00:00.000Z",
+    "JOB_ID": "IT_PROG",
+    "SALARY": 4800,
+    "MANAGER_ID": 103,
+    "DEPARTMENT_ID": 60
+}
+
+
+###
+# @name jsDataServices-Health-checkPool
+Get https://{{server}}/api/v1/health/poolcheck
+Authorization:  Bearer {{token}}
+
+###
+# @name jsDataServices-Health-healthCheck
+Get https://{{server}}/api/v1/health
+Authorization:  Bearer {{token}}
+

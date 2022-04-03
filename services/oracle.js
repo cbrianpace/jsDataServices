@@ -1,5 +1,5 @@
 const oracledb = require('oracledb');
-var dbConfig = require('../config/databaseora.js');
+var dbConfig = require('../config/database.js');
 
 function initPoolSession(connection, requestedTag, cb) {
     connection.execute(
@@ -13,7 +13,18 @@ function initPoolSession(connection, requestedTag, cb) {
 
 async function initialize() {
     //dbConfig.dbPool['sessionCallback'] = initPoolSession;
-    const pool = await oracledb.createPool(dbConfig.dbPool);
+    const config = {
+        db: {
+            user: process.env.DATABASE_USERNAME,
+            password: process.env.DATABASE_PASSWORD_DECRYPTED,
+            connectString: `${process.env.DATABASE_HOST}:${process.env.DATABASE_PORT}/${process.env.DATABASE}`,
+            poolMax: dbConfig.dbPool.poolMax,
+            poolMin: dbConfig.dbPool.poolMin,
+            poolIncrement: dbConfig.dbPool.poolIncrement,
+            enableStatistics: true
+        }
+    }
+    const pool = await oracledb.createPool(config.db);
 }
 
 async function close() {
@@ -51,14 +62,3 @@ function simpleExecute(statement, binds = [], opts = {}) {
 module.exports.simpleExecute = simpleExecute;
 module.exports.close = close;
 module.exports.initialize = initialize;
-
-//
-//  Example of using simpleExecute function
-//
-// app.get('/', async (req, res) => {
-//     const result = await database.simpleExecute('select user, systimestamp from dual');
-//     const user = result.rows[0].USER;
-//     const date = result.rows[0].SYSTIMESTAMP;
-
-//     res.end(`DB user: ${user}\nDate: ${date}`);
-//   });
