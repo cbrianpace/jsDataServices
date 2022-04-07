@@ -2,6 +2,7 @@ const oradb = require('oracledb')
 const rdbms = process.env.DATABASE_PLATFORM
 const db = require('./'+rdbms)
 const dbTables = require('../helpers/dbTables')
+const dbViews = require('../helpers/dbViews')
 
 const queryFeatures = require('../helpers/queryFeatures');
 const schema = process.env.DATABASE_SCHEMA
@@ -31,7 +32,14 @@ const getData = async (req) => {
         //
         // Parse Parameters
         //
-        var query = `select ${dbTables[req.params.table].columns} 
+        dbObjects = null;
+        if (dbViews[req.params.table]) {
+            dbObjects = dbViews;
+        } else {
+            dbObjects = dbTables;
+        }
+
+        var query = `select ${dbObjects[req.params.table].columns} 
                      from ${schema}.${req.params.table} 
                      where 1=1 `;
 
@@ -39,7 +47,7 @@ const getData = async (req) => {
         const context = {};
         var bindCount = 0;
         var fetchClob = {};
-        var sqlObject = dbTables[req.params.table];
+        var sqlObject = dbObjects[req.params.table];
 
         context.id = parseInt(req.params.id, 10);
         context.offset = parseInt(req.query.offset, 10);

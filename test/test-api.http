@@ -21,7 +21,7 @@ Get https://{{server}}/api/v1/db/employees?sort=LAST_NAME[asc]&EMPLOYEE_ID[eq]=1
 Authorization:  Bearer {{token}}
 
 ###
-# @name jsDataServicesGET3
+# @name jsDataServices-db-GET3
 Get https://{{server}}/api/v1/db/employees?sort=LAST_NAME[asc]&LAST_NAME[eq]=Pace
 Authorization:  Bearer {{token}}
 
@@ -75,6 +75,11 @@ content-type: application/json
     "MANAGER_ID": 103,
     "DEPARTMENT_ID": 60
 }
+
+###
+# @name jsDataServices-vw-GET
+Get https://{{server}}/api/v1/vw/employee_sal_view?sort=LAST_NAME[asc]&offset=0&limit=10
+Authorization:  Bearer {{token}}
 
 
 ###

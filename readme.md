@@ -17,9 +17,13 @@ The API is configured to connect to Oracle or Postgres.  More databases will com
 ## Tables
 Tables are defined to the interface by a simple definition in the models directory.  Once a table is added (defined), update the /helpers/dbTables.js to include new tables.
 
+## Views
+Views have been split into a different route (/api/v1/vw) with only get option available.  Define the views as you would tables in the models directory.  Once the view is added (defined), update the /helpers/dbViews.js to include the new views.
 
 ## Endpoint Format
-The endpoint follows the standard /api/v1/db/<ttttt>/<nnn>.  In the endpoint standard, ‘ttttt’ represents the name of the table.  Optionally a value for the primary key can be specified for the ‘nnn’ value to return a specific row or set of rows.
+The endpoint for tables follows the standard /api/v1/db/<ttttt>/<nnn>.  In the endpoint standard, ‘ttttt’ represents the name of the table.  Optionally a value for the primary key can be specified for the ‘nnn’ value to return a specific row or set of rows.
+
+The endpoint for views follows the standard /api/v1/vw/<ttttt>/<nnn>.  In the endpoint standard, ‘ttttt’ represents the name of the view.  Optionally a value for the primary key can be specified for the ‘nnn’ value to return a specific row or set of rows.
 
 ## Features
 The end point supports features for filtering, sorting, and pagination and are appended as parameters to the endpoint.  The following table describes each of these features.  Multiple features can be specified and should be delimited by the ampersand (&).

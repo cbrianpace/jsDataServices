@@ -4,6 +4,8 @@ const morgan = require('morgan');
 const authRouter = require('./routes/authRoutes');
 const healthRouter = require('./routes/healthRoutes');
 const dbRouter = require('./routes/dbRoutes');
+const dbViewRouter = require('./routes/dbViewRoutes');
+
 const cors = require('cors');
 
 const app = express();
@@ -30,5 +32,6 @@ app.use((req, res, next) => {
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/health', healthRouter);
 app.use('/api/v1/db', dbRouter);
+app.use('/api/v1/vw', dbViewRouter);
 
 module.exports = app;
