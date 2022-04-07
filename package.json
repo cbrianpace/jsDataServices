@@ -2,7 +2,7 @@
   "name": "placement",
   "version": "8.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
     "start": "nodemon server.js"
   },

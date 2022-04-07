@@ -9,6 +9,8 @@ dotenv.config({
     path: './config/config.env',
 });
 
+console.log(process.env.DATABASE_PLATFORM);
+
 const cryptonite = require('./helpers/cryptonite');
 
 process.env.DATABASE_PASSWORD_DECRYPTED = cryptonite.decryptdb(
