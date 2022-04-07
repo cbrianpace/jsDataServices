@@ -16,8 +16,6 @@ validateTable = async (req, res, next) => {
     next();
 };
 
-console.log(dbViews);
-
 async function getStuff(req, res, next) {
     try {
         const context = {};
